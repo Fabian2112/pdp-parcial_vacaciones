@@ -15,9 +15,87 @@ Queremos saber qué lugares son divertidos. Para todos los lugares, esto se da s
 
 */
 
+/*
+const caba = new Ciudad(nombre="caba", cantidadHabitantes=1000, atraccionesTuristicas=#{"obelisco"} , cantidadDecibelios=100)
+
+const kehn = new Pueblo(nombre="kehn", extension=20, anioFundacion=1600, provinciaQueSeUbica="Misiones")
+
+const pmogotes = new Balneario(nombre="pmogotes", metrosDePlaya=400, tieneMarPeligroso=true, tienePeatonal=false)
+
+caba.esDivertido()
+
+kehn.esDivertido()
+
+kehn.esTranquilo()
+
+pmogotes.esDivertido()
+
+pmogotes.esTranquilo()
+
+*/
 
 
+class Lugar{
+    var property nombre
+    var property tipoDeLugar
 
+    method esDivertido() = nombre.size() % 2 == 0
+
+    method esLugarRaro() = nombre.size() > 10
+
+    method esTranquilo() = false
+
+    method tipoDeLugar() = 
+        if self.esTranquilo() lugarTranquilo
+        else if self.esDivertido() lugarDivertido
+        else if self.esLugarRaro()lugarRaro
+        else lugarDesconocido
+    
+}
+
+class Ciudad inherits Lugar{
+    var property cantidadHabitantes
+    var property atraccionesTuristicas = #{}
+    var property cantidadDecibelios
+    
+    override method esDivertido() = 
+        super() && 
+        cantidadHabitantes > 100 && 
+        atraccionesTuristicas.size() > 0
+
+    override method esTranquilo() = cantidadDecibelios < 20
+     
+}
+
+class Pueblo inherits Lugar{
+    var property extension
+    const property anioFundacion
+    var property provinciaQueSeUbica
+
+    method esDelLitoral() = ["Entre Rios", "Corrientes", "Misiones"].contains(provinciaQueSeUbica)
+
+    override method esDivertido() = 
+        super() && 
+        anioFundacion < 1800 &&
+        self.esDelLitoral()
+
+    override method esTranquilo() = provinciaQueSeUbica == "La Pampa"
+
+}
+
+class Balneario inherits Lugar{
+    var property metrosDePlaya
+    var property tieneMarPeligroso
+    var property tienePeatonal
+
+    override method esDivertido() = 
+        super() && 
+        metrosDePlaya > 300 &&
+        self.tieneMarPeligroso()
+
+    override method esTranquilo() = !tienePeatonal
+
+}
 
 
 
@@ -33,6 +111,41 @@ Nos interesa que una persona pueda cambiar su preferencia en forma simple, así 
 Queremos saber si una persona se iría de vacaciones a un lugar en base a su preferencia.
 */
 
+/*
+
+const pepe = new Persona(nombre="pepe", lugarDePreferencia=lugarTranquilo)
+
+pepe.seIriaDeVacaciones(kehn)
+pepe.seIriaDeVacaciones(pmogotes)
+
+*/
+
+class Persona {
+    const property nombre
+
+    var property lugarDePreferencia = #{}
+    
+
+    method agregarPreferencia(preferencia) = lugarDePreferencia.add(preferencia)
+
+    method seIriaDeVacaciones(lugar)
+}
+
+object lugarTranquilo {
+    const property preferencia = "tranquilidad"
+}
+
+object lugarDivertido{
+    const property preferencia = "divertido"
+}
+
+object lugarRaro {
+    const property preferencia = "raro"
+}
+
+object lugarDesconocido {
+    const property preferencia = "desconocido"
+}
 
 /*
 Punto 3: Tour (4 puntos)
@@ -44,6 +157,8 @@ todos los lugares deben ser adecuados para la persona, según lo definido en el 
 en caso contrario, la persona no puede incorporarse al tour
 cuando llegamos a la cantidad de personas requerida, el tour se confirma y no se permite incorporar más gente, a menos de que alguna persona se quiera bajar (ud. debe implementar la forma de lograr ésto)
 */
+
+
 
 
 
